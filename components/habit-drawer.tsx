@@ -73,6 +73,12 @@ export function HabitDrawer({ open, onOpenChange, onSave, habit }: HabitDrawerPr
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="max-h-[90vh]">
+        <DrawerHeader className="sr-only">
+          <DrawerTitle>Add new habit</DrawerTitle>
+          <DrawerDescription>
+            Create a new habit to track your progress and build consistency.
+          </DrawerDescription>
+        </DrawerHeader>
         <div className="mx-auto w-full max-w-lg overflow-y-auto pt-6">
           <Form {...form}>
             <form onSubmit={handleSubmit}>
