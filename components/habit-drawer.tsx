@@ -284,8 +284,10 @@ export function HabitDrawer({ open, onOpenChange, onSave, habit }: HabitDrawerPr
                 {/* Submit button */}
                 <Button
                   type="submit"
+                  variant="outline"
+                  size="lg"
                   disabled={form.formState.isSubmitting}
-                  className="w-full h-11 text-sm font-semibold uppercase tracking-wide"
+                  className="w-full "
                 >
                   {isEditing ? "Save Changes" : "Create Habit"}
                 </Button>

@@ -34,9 +34,9 @@ export default function LandingPage() {
             <div className="relative z-10 mx-auto w-full max-w-5xl px-6">
               <div className="relative mx-auto w-full flex items-center justify-center">
                 <DemoHabits />
-                <div className="pointer-events-none mask-radial-from-50% mask-radial-at-bottom mask-radial-[35%_100%] absolute -bottom-2 left-0 w-full h-full bg-linear-to-t from-[#0D0D0D] to-transparent" />
+                <div className="hidden md:block pointer-events-none mask-radial-from-50% mask-radial-at-bottom mask-radial-[35%_100%] absolute -bottom-2 left-0 w-full h-full bg-linear-to-t from-[#0D0D0D] to-transparent" />
               </div>
-              <div className="mx-auto max-w-lg text-center relative z-10">
+              <div className="mt-6 md:mt-0 mx-auto max-w-lg text-center relative z-10">
                 <h1 className="text-balance font-serif text-4xl font-medium sm:text-5xl">
                   Don't worry, be habit.
                 </h1>
@@ -50,7 +50,7 @@ export default function LandingPage() {
                     <ChevronRight className="opacity-50" />
                   </Link>
                 </Button>
-                <div className="bg-[#0D0D0D] h-72 w-72 rounded-full absolute inset-0 -top-16 mx-auto blur-2xl -z-10" />
+                <div className="hidden md:block bg-[#0D0D0D] h-72 w-72 rounded-full absolute inset-0 -top-16 mx-auto blur-2xl -z-10" />
               </div>
             </div>
           </div>

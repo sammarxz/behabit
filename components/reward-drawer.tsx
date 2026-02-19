@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Drawer, DrawerContent } from "@/components/ui/drawer"
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer"
 import { Zap } from "lucide-react"
 import { createRewardSchema } from "@/lib/shared/schemas/reward.schema"
 import type { Reward } from "@/lib/shared/types"
@@ -72,6 +72,9 @@ export function RewardDrawer({ open, onOpenChange, onSave, reward }: RewardDrawe
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="max-h-[90vh]">
+        <DrawerHeader className="sr-only">
+          <DrawerTitle>{isEditing ? "Edit Reward" : "Create Reward"}</DrawerTitle>
+        </DrawerHeader>
         <div className="mx-auto w-full max-w-lg overflow-y-auto pt-6">
           <Form {...form}>
             <form onSubmit={handleSubmit}>
@@ -147,8 +150,10 @@ export function RewardDrawer({ open, onOpenChange, onSave, reward }: RewardDrawe
                 {/* Submit */}
                 <Button
                   type="submit"
+                  variant="outline"
                   disabled={form.formState.isSubmitting}
-                  className="w-full h-11 text-sm font-semibold uppercase tracking-wide"
+                  className="w-full"
+                  size="lg"
                 >
                   {isEditing ? "Save Changes" : "Create Reward"}
                 </Button>
