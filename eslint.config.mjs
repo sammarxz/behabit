@@ -5,18 +5,20 @@ import nextPlugin from "eslint-config-next"
 // keeping react-hooks, import, jsx-a11y and @next/next.
 const [nextBase, nextTypescript] = nextPlugin
 
+// Files that should never be linted (build artifacts, generated files)
+const ignoresConfig = {
+  ignores: [".next/**", "public/sw.js"],
+}
+
 const { react: _react, ...pluginsWithoutReact } = nextBase.plugins
 
-const reactRuleKeys = Object.keys(nextBase.rules || {}).filter((r) =>
-  r.startsWith("react/"),
-)
+const reactRuleKeys = Object.keys(nextBase.rules || {}).filter((r) => r.startsWith("react/"))
 const rulesWithoutReact = Object.fromEntries(
-  Object.entries(nextBase.rules || {}).filter(
-    ([key]) => !reactRuleKeys.includes(key),
-  ),
+  Object.entries(nextBase.rules || {}).filter(([key]) => !reactRuleKeys.includes(key))
 )
 
 const eslintConfig = [
+  ignoresConfig,
   {
     ...nextBase,
     plugins: pluginsWithoutReact,

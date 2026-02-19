@@ -20,7 +20,7 @@ export default function PublicProfilePage() {
   const { data, isLoading, error } = usePublicProfile(username)
 
   const profile = data?.profile
-  const habits = data?.habits ?? []
+  const habits = useMemo(() => data?.habits ?? [], [data?.habits])
 
   const initials =
     profile?.name

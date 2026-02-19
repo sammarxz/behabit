@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef } from "react"
+import React, { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -57,13 +57,13 @@ const tabVariants = {
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<TabValue>("profile")
-  const directionRef = useRef(0)
+  const [direction, setDirection] = useState(0)
 
   function handleTabChange(value: string) {
     const tabs = visibleTabs
     const oldIdx = tabs.indexOf(activeTab)
     const newIdx = tabs.indexOf(value as TabValue)
-    directionRef.current = newIdx > oldIdx ? 1 : -1
+    setDirection(newIdx > oldIdx ? 1 : -1)
     setActiveTab(value as TabValue)
   }
 
@@ -162,10 +162,10 @@ export default function SettingsPage() {
           </TabsList>
 
           <div className="relative">
-            <AnimatePresence initial={false} mode="wait" custom={directionRef.current}>
+            <AnimatePresence initial={false} mode="wait" custom={direction}>
               <motion.div
                 key={activeTab}
-                custom={directionRef.current}
+                custom={direction}
                 variants={tabVariants}
                 initial="enter"
                 animate="center"

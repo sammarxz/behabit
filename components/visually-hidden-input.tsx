@@ -33,8 +33,11 @@ function VisuallyHiddenInput<T = InputValue>(props: VisuallyHiddenInputProps<T>)
 
   const prevValue = React.useMemo(() => {
     const currentValue = isCheckInput ? checked : value
+    // eslint-disable-next-line react-hooks/refs
     if (prevValueRef.current.value !== currentValue) {
+      // eslint-disable-next-line react-hooks/refs
       prevValueRef.current.previous = prevValueRef.current.value
+      // eslint-disable-next-line react-hooks/refs
       prevValueRef.current.value = currentValue
     }
     return prevValueRef.current.previous
@@ -110,6 +113,7 @@ function VisuallyHiddenInput<T = InputValue>(props: VisuallyHiddenInputProps<T>)
       setter.call(input, serializedCurrentValue)
       input.dispatchEvent(event)
     }
+    // eslint-disable-next-line react-hooks/refs -- prevValue is derived from ref mutation in useMemo; rule incorrectly flags dep array
   }, [prevValue, value, checked, bubbles, isCheckInput])
 
   const composedStyle = React.useMemo<React.CSSProperties>(() => {

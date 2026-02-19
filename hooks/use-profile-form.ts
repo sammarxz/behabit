@@ -55,6 +55,7 @@ export function useProfileForm() {
     defaultValues: { name: "", username: "" },
   })
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const usernameValue = profileForm.watch("username")
 
   const passwordForm = useForm<PasswordValues>({

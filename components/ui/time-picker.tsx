@@ -340,6 +340,7 @@ function TimePicker(props: TimePickerProps) {
 
   const propsRef = useAsRef({ onValueChange, onOpenChange })
 
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const store: Store = React.useMemo(() => {
     return {
       subscribe: (cb) => {
@@ -1642,6 +1643,7 @@ function TimePickerColumnItem(props: TimePickerColumnItemProps) {
 
       itemRef.current?.focus()
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [itemProps.onClick]
   )
 
@@ -1711,6 +1713,7 @@ function TimePickerColumnItem(props: TimePickerColumnItemProps) {
         })
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [itemProps.onKeyDown, columnContext, groupContext, value]
   )
 
@@ -2046,6 +2049,7 @@ function TimePickerClear(props: ButtonProps) {
       if (disabled || readOnly) return
       store.setState("value", "")
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [clearProps.onClick, disabled, readOnly, store]
   )
 

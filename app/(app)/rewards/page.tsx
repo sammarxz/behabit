@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Plus, Trophy, PackageCheck } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -33,14 +33,14 @@ const tabVariants = {
 
 export default function RewardsPage() {
   const [activeTab, setActiveTab] = useState<TabValue>("available")
-  const directionRef = useRef(0)
+  const [direction, setDirection] = useState(0)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [editingReward, setEditingReward] = useState<Reward | null>(null)
 
   function handleTabChange(value: string) {
     const oldIdx = TABS.indexOf(activeTab)
     const newIdx = TABS.indexOf(value as TabValue)
-    directionRef.current = newIdx > oldIdx ? 1 : -1
+    setDirection(newIdx > oldIdx ? 1 : -1)
     setActiveTab(value as TabValue)
   }
 
@@ -159,10 +159,10 @@ export default function RewardsPage() {
           </TabsList>
 
           <div className="relative">
-            <AnimatePresence initial={false} mode="wait" custom={directionRef.current}>
+            <AnimatePresence initial={false} mode="wait" custom={direction}>
               <motion.div
                 key={activeTab}
-                custom={directionRef.current}
+                custom={direction}
                 variants={tabVariants}
                 initial="enter"
                 animate="center"
