@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { generateDates } from "@/lib/habit-types"
+import { generateDates } from "@/lib/shared/types"
 
 interface HeatMapProps {
   activities: Record<string, boolean>
@@ -9,7 +9,7 @@ interface HeatMapProps {
 }
 
 export function HeatMap({ activities, expanded }: HeatMapProps) {
-  const days = expanded ? 240 : 120
+  const days = expanded ? 365 : 120
   const dates = useMemo(() => generateDates(days), [days])
 
   const weeks = useMemo(() => {
@@ -54,56 +54,70 @@ export function HeatMap({ activities, expanded }: HeatMapProps) {
     return labels
   }, [weeks])
 
-  const cellSize = expanded ? 10 : 8
+  // SVG logical units — viewBox scales to fill container width
+  const cellSize = 10
   const gap = 2
   const colWidth = cellSize + gap
+  const labelHeight = 14
+
+  const svgWidth = weeks.length * colWidth - gap
+  const svgHeight = labelHeight + 7 * colWidth - gap
 
   return (
-    <div className="flex flex-col gap-1.5">
-      {/* Month labels */}
-      <div className="relative h-4">
-        {monthLabels.map((m, i) => (
-          <span
-            key={i}
-            className="absolute text-[9px] font-mono text-muted-foreground"
-            style={{ left: `${m.weekIndex * colWidth}px` }}
+    <div className="flex flex-col gap-1.5 w-full">
+      <svg
+        viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+        width="100%"
+        preserveAspectRatio="xMinYMid meet"
+        aria-label="Activity heatmap"
+      >
+        {/* Month labels */}
+        {monthLabels.map((m) => (
+          <text
+            key={`${m.weekIndex}-${m.label}`}
+            x={m.weekIndex * colWidth}
+            y={10}
+            style={{
+              fontSize: 9,
+              fontFamily: "monospace",
+              fill: "var(--muted-foreground)",
+            }}
           >
             {m.label}
-          </span>
+          </text>
         ))}
-      </div>
 
-      {/* Grid */}
-      <div className="flex" style={{ gap: `${gap}px` }}>
-        {weeks.map((week, weekIndex) => (
-          <div
-            key={weekIndex}
-            className="flex flex-col"
-            style={{ gap: `${gap}px` }}
-          >
-            {week.map((date, dayIndex) => (
-              <div
+        {/* Grid */}
+        <g transform={`translate(0, ${labelHeight})`}>
+          {weeks.map((week, weekIndex) =>
+            week.map((date, dayIndex) => (
+              <rect
                 key={`${weekIndex}-${dayIndex}`}
-                style={{ width: cellSize, height: cellSize }}
-                className={`rounded-[2px] ${
-                  !date
-                    ? "bg-transparent"
+                x={weekIndex * colWidth}
+                y={dayIndex * colWidth}
+                width={cellSize}
+                height={cellSize}
+                rx={1.5}
+                style={{
+                  fill: !date
+                    ? "transparent"
                     : activities[date]
-                      ? "bg-foreground"
-                      : "bg-secondary"
-                }`}
-                title={
-                  date
-                    ? `${date}: ${activities[date] ? "Done" : "Not done"}`
-                    : ""
-                }
-              />
-            ))}
-          </div>
-        ))}
-      </div>
+                      ? "var(--foreground)"
+                      : "var(--secondary)",
+                }}
+              >
+                {date && (
+                  <title>
+                    {date}: {activities[date] ? "Done" : "Not done"}
+                  </title>
+                )}
+              </rect>
+            ))
+          )}
+        </g>
+      </svg>
 
-      {/* Legend */}
+      {/* Legend
       {expanded && (
         <div className="flex items-center justify-end gap-1.5 pt-0.5">
           <span className="text-[9px] font-mono text-muted-foreground mr-0.5">
@@ -117,7 +131,7 @@ export function HeatMap({ activities, expanded }: HeatMapProps) {
             More
           </span>
         </div>
-      )}
+      )} */}
     </div>
   )
 }
