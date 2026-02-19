@@ -7,6 +7,7 @@ RUN bun install --production --ignore-scripts
 
 FROM base AS runner
 COPY --from=deps /app/node_modules ./node_modules
+COPY tsconfig.json ./
 COPY server/ ./server/
 COPY lib/ ./lib/
 COPY drizzle/ ./drizzle/
