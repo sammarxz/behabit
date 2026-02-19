@@ -26,6 +26,8 @@ const eslintConfig = [
       "react-hooks/refs": "warn",
       // Downgrade to warning: React Compiler memoization hints (advisory, not blocking)
       "react-hooks/preserve-manual-memoization": "warn",
+      // Downgrade to warning: useCallback/useMemo structure rules (can't inline in all patterns)
+      "react-hooks/use-memo": "warn",
     },
   },
   nextTypescript,
