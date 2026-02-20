@@ -45,7 +45,10 @@ services:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
     restart: unless-stopped
+    ports:
+      - "${PORT:-8080}:3000"
     environment:
+      INTERNAL_API_URL: http://api:3001
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
       BETTER_AUTH_URL: ${BETTER_AUTH_URL}
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}

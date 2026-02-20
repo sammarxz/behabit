@@ -12,6 +12,9 @@ export const app = new Elysia()
       credentials: true,
     })
   )
+  .onError(({ error, code }) => {
+    console.error(`[Elysia Error] ${code}:`, error)
+  })
   .use(authRoutes)
   .use(habitRoutes)
   .use(userRoutes)
