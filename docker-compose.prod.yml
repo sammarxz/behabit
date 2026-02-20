@@ -45,6 +45,7 @@ services:
       args:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+        INTERNAL_API_URL: http://api:3001
     restart: unless-stopped
     ports:
       - "${PORT:-8080}:3000"
