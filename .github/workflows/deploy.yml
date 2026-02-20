@@ -1,0 +1,35 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          passphrase: ${{ secrets.VPS_SSH_PASSPHRASE }} # Opcional
+          script: |
+            # Navegar até a pasta do projeto
+            cd ~/apps/behabit
+
+            # Limpar lixo do diretório de trabalho local do Git no servidor
+            git checkout -- .
+            
+            # Puxar código mais recente do branch principal
+            git pull origin main
+
+            # Reconstruir os containeres Docker que tiverem código atualizado
+            # O Compose vai verificar apenas as imagens que precisarem (por conta do "context: .")
+            docker compose -f docker-compose.prod.yml up --build -d
+            
+            # Deletar imagens "dangling" soltas que o docker deixa pra tras depois do rebuild (poupa espaço do disco VPS)
+            docker image prune -f
