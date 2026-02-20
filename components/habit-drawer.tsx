@@ -61,7 +61,7 @@ export function HabitDrawer({ open, onOpenChange, onSave, habit }: HabitDrawerPr
     let finalEmoji = data.emoji
 
     try {
-      const emojiRegex = new RegExp("^(\\\\p{RGI_Emoji})\\\\s*", "v")
+      const emojiRegex = new RegExp("^(\\p{RGI_Emoji})\\s*", "v")
       const match = finalName.match(emojiRegex)
       if (match) {
         finalEmoji = match[1]
@@ -70,7 +70,7 @@ export function HabitDrawer({ open, onOpenChange, onSave, habit }: HabitDrawerPr
     } catch (e) {
       try {
         const fallbackRegex = new RegExp(
-          "^(\\\\p{Extended_Pictographic}|\\\\p{Emoji_Presentation})\\\\s*",
+          "^(\\p{Extended_Pictographic}|\\p{Emoji_Presentation})\\s*",
           "u"
         )
         const match = finalName.match(fallbackRegex)
