@@ -4,10 +4,13 @@ import type { NextRequest } from "next/server"
 const PROTECTED = ["/dashboard", "/settings", "/rewards"]
 const AUTH_PAGES = ["/login", "/register"]
 const SESSION_COOKIE = "better-auth.session_token"
+const SECURE_SESSION_COOKIE = "__Secure-better-auth.session_token"
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const isAuth = !!request.cookies.get(SESSION_COOKIE)?.value
+  const isAuth =
+    !!request.cookies.get(SESSION_COOKIE)?.value ||
+    !!request.cookies.get(SECURE_SESSION_COOKIE)?.value
 
   if (PROTECTED.some((p) => pathname.startsWith(p)) && !isAuth)
     return NextResponse.redirect(new URL("/login", request.url))
