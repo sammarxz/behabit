@@ -57,9 +57,33 @@ export function HabitDrawer({ open, onOpenChange, onSave, habit }: HabitDrawerPr
   const watchedXpPerCheck = form.watch("xpPerCheck")
 
   const handleSubmit = form.handleSubmit((data) => {
+    let finalName = data.name.trim()
+    let finalEmoji = data.emoji
+
+    try {
+      const emojiRegex = new RegExp("^(\\\\p{RGI_Emoji})\\\\s*", "v")
+      const match = finalName.match(emojiRegex)
+      if (match) {
+        finalEmoji = match[1]
+        finalName = finalName.slice(match[0].length).trim() || "My Habit"
+      }
+    } catch (e) {
+      try {
+        const fallbackRegex = new RegExp(
+          "^(\\\\p{Extended_Pictographic}|\\\\p{Emoji_Presentation})\\\\s*",
+          "u"
+        )
+        const match = finalName.match(fallbackRegex)
+        if (match) {
+          finalEmoji = match[1]
+          finalName = finalName.slice(match[0].length).trim() || "My Habit"
+        }
+      } catch (err) {}
+    }
+
     onSave({
-      name: data.name,
-      emoji: data.emoji,
+      name: finalName,
+      emoji: finalEmoji,
       repeat: data.repeat,
       selectedDays: data.selectedDays,
       remindMe: data.remindMe,
