@@ -8,8 +8,16 @@ import { rewardRoutes } from "./routes/reward.routes"
 export const app = new Elysia()
   .use(
     cors({
-      origin: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+      origin: true, // Allow incoming origin
       credentials: true,
+      allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "Accept",
+        "Origin",
+        "X-Forwarded-Host",
+        "X-Forwarded-Proto",
+      ],
     })
   )
   .onError(({ error, code }) => {
