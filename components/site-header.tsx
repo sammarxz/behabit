@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Star, User, Globe, LogOut, Trophy } from "lucide-react"
+import { Star, User, Globe, LogOut, Trophy, Coffee } from "lucide-react"
 import { calculateTotalXP, calculateSpentXP } from "@/lib/shared/types"
 import { Logo } from "./logo"
 
@@ -108,6 +108,13 @@ export function SiteHeader({ maxWidth = "lg" }: SiteHeaderProps) {
                     Public Profile
                   </DropdownMenuItem>
                 )}
+                <DropdownMenuItem
+                  onClick={() => window.open("https://buymeacoffee.com/smarxz", "_blank")}
+                  className="cursor-pointer"
+                >
+                  <Coffee className="mr-2 h-4 w-4" />
+                  Donate
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={handleSignOut}
