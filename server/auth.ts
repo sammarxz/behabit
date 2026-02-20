@@ -37,6 +37,7 @@ export const auth = betterAuth({
       },
     },
   },
+  trustHost: true,
 })
 
 export type Auth = typeof auth
