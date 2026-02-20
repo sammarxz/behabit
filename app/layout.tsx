@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Toaster } from "sonner"
+import Script from "next/script"
 import { Providers } from "./providers"
 import "./globals.css"
 
@@ -22,13 +23,14 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://behabit.marxz.me"),
   title: "BeHabit - Habit Tracker",
   description: "Track your daily habits with a beautiful GitHub-inspired heatmap dashboard",
-  generator: "v0.app",
+  authors: [{ name: "Sam Marxz" }],
   applicationName: "BeHabit",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "black",
     title: "BeHabit",
   },
   formatDetection: { telephone: false },
@@ -39,6 +41,25 @@ export const metadata: Metadata = {
       { url: "/icon.svg", type: "image/svg+xml" },
     ],
     apple: "/apple-icon.png",
+  },
+  openGraph: {
+    title: "BeHabit - Habit Tracker",
+    description: "Track your daily habits with a beautiful GitHub-inspired heatmap dashboard",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "BeHabit Dashboard Preview",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BeHabit - Habit Tracker",
+    description: "Track your daily habits with a beautiful GitHub-inspired heatmap dashboard",
+    images: ["/og-image.png"],
   },
 }
 
@@ -54,6 +75,11 @@ export default function RootLayout({
           {children}
           <Toaster theme="dark" position="bottom-right" />
         </Providers>
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="a2680e50-55dc-40e5-8490-204989329c5f"
+        />
       </body>
     </html>
   )
