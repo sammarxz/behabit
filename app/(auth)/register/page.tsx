@@ -36,8 +36,8 @@ export default function RegisterPage() {
       name: values.name,
       email: values.email,
       password: values.password,
-      data: { username: values.username },
-    } as Parameters<typeof signUp.email>[0])
+      username: values.username,
+    } as Parameters<typeof signUp.email>[0] & { username: string })
 
     if (error) {
       form.setError("root", {
